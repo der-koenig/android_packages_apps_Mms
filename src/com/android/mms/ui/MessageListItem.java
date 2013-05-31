@@ -526,7 +526,8 @@ public class MessageListItem extends LinearLayout implements
 
         if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
             int subscription = subId + 1;
-            buf.append("SUB" + subscription + ":");
+            buf.append(mContext.getResources().getString(
+                    R.string.subscription_title, subscription) + ":");
             buf.append("\n");
         }
 

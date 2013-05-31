@@ -791,9 +791,7 @@
 
     <!-- Subscription selection strings -->
     <string name="select_subscription_title">Select Subscription</string>
-    <string name="subscription1_title">Subscription 1</string>
-    <string name="subscription2_title">Subscription 2</string>
-    <string name="subscription3_title">Subscription 3</string>
+    <string name="subscription_title">SIM <xliff:g id="subscription">%d</xliff:g></string>
 
     <string name="pending_mms_title">Pending MMS on other subscription.</string>
     <string name="pending_mms">Messaging: One or more MMS are pending.</string>
