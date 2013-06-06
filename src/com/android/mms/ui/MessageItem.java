@@ -150,7 +150,10 @@ public class MessageItem {
             }
             mBody = cursor.getString(columnsMap.mColumnSmsBody);
 
-            mSubscription = cursor.getInt(columnsMap.mColumnSubId);
+            if (!cursor.isNull(columnsMap.mColumnSubId))
+                mSubscription = cursor.getInt(columnsMap.mColumnSubId);
+            else
+                mSubscription = -1;
             // Unless the message is currently in the progress of being sent, it gets a time stamp.
             if (!isOutgoingMessage()) {
                 // Set "received" or "sent" time stamp
@@ -166,7 +169,10 @@ public class MessageItem {
             mMessageType = cursor.getInt(columnsMap.mColumnMmsMessageType);
             mErrorType = cursor.getInt(columnsMap.mColumnMmsErrorType);
             String subject = cursor.getString(columnsMap.mColumnMmsSubject);
-            mSubscription = cursor.getInt(columnsMap.mColumnSubId);
+            if (!cursor.isNull(columnsMap.mColumnSubId))
+                mSubscription = cursor.getInt(columnsMap.mColumnSubId);
+            else
+                mSubscription = -1;
 
             if (!TextUtils.isEmpty(subject)) {
                 EncodedStringValue v = new EncodedStringValue(
