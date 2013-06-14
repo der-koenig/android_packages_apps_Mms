@@ -109,6 +109,7 @@ public class MessageListItem extends LinearLayout implements
     private MessageItem mMessageItem;
     private String mDefaultCountryIso;
     private TextView mDateView;
+    private TextView mSubscriptionView;
     public View mMessageBlock;
     private Path mPathRight;
     private Path mPathLeft;
@@ -147,6 +148,7 @@ public class MessageListItem extends LinearLayout implements
 
         mBodyTextView = (TextView) findViewById(R.id.text_view);
         mDateView = (TextView) findViewById(R.id.date_view);
+        mSubscriptionView = (TextView) findViewById(R.id.subscription_view);
         mLockedIndicator = (ImageView) findViewById(R.id.locked_indicator);
         mDeliveredIndicator = (ImageView) findViewById(R.id.delivered_indicator);
         mDetailsIndicator = (ImageView) findViewById(R.id.details_indicator);
@@ -216,6 +218,15 @@ public class MessageListItem extends LinearLayout implements
                                             mMessageItem.mTextContentType));
 
         mDateView.setText(msgSizeText + " " + mMessageItem.mTimestamp);
+
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()
+                && mMessageItem.mSubscription >= 0) {
+            mSubscriptionView.setText("(" + mContext.getResources().getString(
+                    R.string.subscription_title, mMessageItem.mSubscription + 1) + ")");
+            mSubscriptionView.setVisibility(View.VISIBLE);
+        } else {
+            mSubscriptionView.setVisibility(View.GONE);
+        }
 
         switch (mMessageItem.getMmsDownloadStatus()) {
             case DownloadManager.STATE_DOWNLOADING:
@@ -360,6 +371,15 @@ public class MessageListItem extends LinearLayout implements
         mDateView.setText(mMessageItem.isSending() ?
                 mContext.getResources().getString(R.string.sending_message) :
                     mMessageItem.mTimestamp);
+
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()
+                && mMessageItem.mSubscription >= 0) {
+            mSubscriptionView.setText("(" + mContext.getResources().getString(
+                    R.string.subscription_title, mMessageItem.mSubscription + 1) + ")");
+            mSubscriptionView.setVisibility(View.VISIBLE);
+        } else {
+            mSubscriptionView.setVisibility(View.GONE);
+        }
 
         if (mMessageItem.isSms()) {
             showMmsView(false);
@@ -523,13 +543,6 @@ public class MessageListItem extends LinearLayout implements
                                        int subId, String subject, Pattern highlight,
                                        String contentType) {
         SpannableStringBuilder buf = new SpannableStringBuilder();
-
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled() && subId >= 0) {
-            int subscription = subId + 1;
-            buf.append(mContext.getResources().getString(
-                    R.string.subscription_title, subscription) + ":");
-            buf.append("\n");
-        }
 
         boolean hasSubject = !TextUtils.isEmpty(subject);
         SmileyParser parser = SmileyParser.getInstance();

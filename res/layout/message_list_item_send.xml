@@ -102,8 +102,17 @@
                         android:background="@drawable/listitem_background"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingRight="3dip"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/text_hairline" />
+
+                    <TextView android:id="@+id/subscription_view"
+                        android:background="@drawable/listitem_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/text_hairline"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <ViewStub android:id="@+id/mms_layout_view_stub"
